@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="stu-dash.css" />
+  <link rel="stylesheet" href="stu-style.css" />
+  <!-- Font Awesome Cdn Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li><a href="stu-dash.html" class="logo">
+          <img src="./pic/logo.jpg">
+          <span class="nav-item">DASHBOARD</span>
+        </a></li>
+        <li><a href="request.html">
+          <i class="fas fa-hands-helping"></i>
+          <span class="nav-item">Request</span>
+        </a></li>
+        <li><a href="view.html">
+          <i class="fas fa-clipboard"></i>
+          <span class="nav-item">View or Cancel</span>
+        </a></li>
+        <li><a href="chat.html">
+          <i class="fas fa-chart-bar"></i>
+          <span class="nav-item">View Chart</span>
+        </a></li>
+        <li><a href="timetable.html">
+          <i class="fas fa-calendar-alt"></i>
+          <span class="nav-item">Timetable</span>
+        </a></li>
+        <li class="logout"><a href="#" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="nav-item">Logout</span>
+        </a></li>
+      </ul>
+    </nav>
+    <section class="main1">
+      <h1>View and Cancel Bookings</h1>
+      <table>
+        <tr>
+          <th>Date</th>
+          <th>Timeslot</th>
+          <th>Room Num</th>
+          <th>Reason</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>2023-05-24</td>
+          <td>Morning</td>
+          <td>Room 101</td>
+          <td>Meeting</td>
+          <td><button onclick="cancelBooking(1)">Cancel</button></td>
+        </tr>
+        <tr>
+          <td>2023-05-25</td>
+          <td>Afternoon</td>
+          <td>Room 202</td>
+          <td>Training</td>
+          <td><button onclick="cancelBooking(2)">Cancel</button></td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </table>
+    </section>
+  </div>
+  
+  
+</body>
+</html>
+    
+  </div>
+  <script>
+  function logout() {
+      // Add your logout logic here
+      // For example, redirect the user to the login page
+      window.location.href = "../login.html";
+    };
+
+    function cancelBooking(bookingId) {
+  // Here you can write the logic to cancel the booking with the given bookingId
+  // For demonstration purposes, let's assume we're just displaying an alert message
+
+  // Display confirmation message
+  var confirmCancel = confirm("Are you sure you want to cancel this booking?");
+
+  if (confirmCancel) {
+    // Perform cancellation logic here
+
+    // Display success message
+    alert("Booking canceled successfully!");
+  } else {
+    // User cancelled the cancellation process
+    alert("Cancellation process canceled.");
+  }
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Course</title>
+  <link rel="stylesheet" href="admin-dash.css">
+  <link rel="stylesheet" href="course.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li>
+          <a href="admin.html" class="logo">
+            <img src="./pic/logo.jpg">
+            <span class="nav-item">DASHBOARD</span>
+          </a>
+        </li>
+        <li>
+          <a href="course.html">
+            <i class="fas fa-book"></i>
+            <span class="nav-item">Create Course</span>
+          </a>
+        </li>
+        <li>
+          <a href="approve.html">
+            <i class="fas fa-hands-helping"></i>
+            <span class="nav-item">Approve Cradentials</span>
+          </a>
+        </li>
+        <li>
+          <a href="room.html">
+            <i class="fas fa-school"></i>
+            <span class="nav-item">Create Classroom</span>
+          </a>
+        </li>
+        <li>
+          <a href="req_room.html">
+            <i class="fas fa-check-circle"></i>
+            <span class="nav-item">Room Request</span>
+          </a>
+        </li>
+        <li>
+          <a href="malfunc.html">
+            <i class="fas fa-wrench"></i>
+            <span class="nav-item">Malfunction Requests</span>
+          </a>
+        </li>
+      </ul>
+      </nav>
+      
+    <section class="main">
+      <h1>Create Course</h1>
+      <form id="createCourseForm" onsubmit="return validateForm()" action="create_course.php" method="post">
+        <div class="form-group">
+          <label for="courseName">Course Name:</label>
+          <input type="text" id="courseName" name="courseName" required>
+        </div>
+        <div class="form-group">
+          <label for="faculty">Faculty:</label>
+          <input type="text" id="faculty" name="faculty" required>
+        </div>
+        <div class="form-group">
+          <label for="courseCode">Course Code:</label>
+          <input type="text" id="courseCode" name="courseCode" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit">Create</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <script>
+    function logout() {
+        // Add your logout logic here
+        // For example, redirect the user to the login page
+        window.location.href = "../login.html";
+      };
+    </script>
+</body>
+</html>

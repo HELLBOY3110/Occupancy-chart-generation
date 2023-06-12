@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking</title>
+  <link rel="stylesheet" href="fac-dash.css">
+  <link rel="stylesheet" href="booking.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li>
+          <a href="fac-dash.html" class="logo">
+            <img src="./pic/logo.jpg">
+            <span class="nav-item">DASHBOARD</span>
+          </a>
+        </li>
+        <li><a href="booking.html">
+          <i class="fas fa-book"></i>
+          <span class="nav-item">Booking</span>
+        </a></li>
+        <li><a href="history.html">
+          <i class="fas fa-history	"></i>
+          <span class="nav-item">View or cancel</span>
+        </a></li>
+        <li><a href="request.html">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span class="nav-item">Request</span>
+        </a></li>
+        <li><a href="generate chart.html">
+          <i class="fas fa-calendar-alt"></i>
+          <span class="nav-item">Generate Chart</span>
+        </a></li>
+        <li class="logout"><a href="#" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="nav-item">Logout</span>
+        </a></li>
+      </ul>
+      </nav>
+      
+    <section class="main">
+      <h1>Malfunction request</h1>
+      <form id="createBookingForm" onsubmit="return validateForm()">
+        <div class="form-group">
+          <label for="Purpose">Object that is malfunctioning:</label>
+          <input type="text" id="Purpose" name="Purpose"  required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="capacity">Number of days:</label>
+          <input type="text" id="capacity" name="capacity" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Request</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <script>
+    function logout() {
+        // Add your logout logic here
+        // For example, redirect the user to the login page
+        window.location.href = "../login.html";
+      };
+    </script>
+</body>
+</html>

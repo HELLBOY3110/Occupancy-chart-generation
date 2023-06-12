@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Faculty Dashboard</title>
+  <link rel="stylesheet" href="fac-dash.css" />
+  <!-- Font Awesome Cdn Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li><a href="#" class="logo">
+          <img src="./pic/logo.jpg">
+          <span class="nav-item">DASHBOARD</span>
+        </a></li>
+        <li><a href="booking.html">
+          <i class="fas fa-book"></i>
+          <span class="nav-item">Booking</span>
+        </a></li>
+        <li><a href="history.html">
+          <i class="fas fa-history	"></i>
+          <span class="nav-item">View or cancel</span>
+        </a></li>
+        <li><a href="request.html">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span class="nav-item">Request</span>
+        </a></li>
+        <li><a href="generate chart.html">
+          <i class="fas fa-calendar-alt"></i>
+          <span class="nav-item">Generate Chart</span>
+        </a></li>
+        <li class="logout"><a href="#" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="nav-item">Logout</span>
+        </a></li>
+      </ul>
+    </nav>
+
+    <section class="main">
+      <div class="main-top">
+        <h1>Welcome</h1>
+      </div>
+      <div class="users">
+        <div class="card">
+          <img src="./pic/img1.jpg">
+          <h4>Faculty Name</h4>
+          <p>Faculty ID</p>
+        </div>
+      </div>
+      <div class="wrapper">
+        <h2>Notifications</h2>
+        
+      </div>
+    </section>
+  </div>
+  <script>
+  function logout() {
+      // Add your logout logic here
+      // For example, redirect the user to the login page
+      window.location.href = "../login.html";
+    };
+  </script>
+</body>
+</html>

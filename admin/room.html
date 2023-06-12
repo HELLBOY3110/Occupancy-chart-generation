@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-dash.css">
+  <link rel="stylesheet" href="course.css">
+  <!-- Font Awesome CDN Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <nav>
+       <ul>
+        <li>
+          <a href="admin.html" class="logo">
+            <img src="./pic/logo.jpg">
+            <span class="nav-item">DASHBOARD</span>
+          </a>
+        </li>
+        <li>
+          <a href="course.html">
+            <i class="fas fa-book"></i>
+            <span class="nav-item">Create Course</span>
+          </a>
+        </li>
+        <li>
+          <a href="approve.html">
+            <i class="fas fa-hands-helping"></i>
+            <span class="nav-item">Approve Cradentials</span>
+          </a>
+        </li>
+        <li>
+          <a href="room.html">
+            <i class="fas fa-school"></i>
+            <span class="nav-item">Create Classroom</span>
+          </a>
+        </li>
+        <li>
+          <a href="req_room.html">
+            <i class="fas fa-check-circle"></i>
+            <span class="nav-item">Room Request</span>
+          </a>
+        </li>
+        <li>
+          <a href="malfunc.html">
+            <i class="fas fa-wrench"></i>
+            <span class="nav-item">Malfunction Requests</span>
+          </a>
+        </li>
+      </ul>
+      <li class="logout"><a href="#" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="nav-item">Logout</span>
+      </a></li>
+    </nav>
+
+    <section class="main">
+      <h1>Create Classroom</h1>
+      <form id="createClassroomForm" action="room.php" method="post">
+        <div class="form-group">
+          <label for="classnum">Classroom number:</label>
+          <input type="text" id="classnum" name="classnum" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="classcap">Classroom capacity:</label>
+          <input type="text" id="classcap" name="classcap" required>
+        </div>
+  
+        <div class="form-group">
+          <label for="classtype">Type:</label>
+          <select id="classtype" name="classtype" required>
+            <option value="">Select Type</option>
+            <option value="classroom">Classroom</option>
+            <option value="auditorium">Auditorium</option>
+            <option value="labs">Labs</option>
+            <option value="clubroom">Clubroom</option>
+            <option value="artroom">Art Room</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <button type="submit" id="submitBtn">Create Classroom</button>
+        </div>
+      </form>
+  </section>
+  
+  </div>
+  <script>
+    function logout() {
+        // Add your logout logic here
+        // For example, redirect the user to the login page
+        window.location.href = "../login.html";
+      };
+    </script>
+</body>
+</html>

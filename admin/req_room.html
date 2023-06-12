@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-dash.css">
+  <link rel="stylesheet" href="course.css">
+  <!-- Font Awesome CDN Link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <ul>
+        <li>
+          <a href="admin.html" class="logo">
+            <img src="./pic/logo.jpg">
+            <span class="nav-item">DASHBOARD</span>
+          </a>
+        </li>
+        <li>
+          <a href="course.html">
+            <i class="fas fa-book"></i>
+            <span class="nav-item">Create Course</span>
+          </a>
+        </li>
+        <li>
+          <a href="approve.html">
+            <i class="fas fa-hands-helping"></i>
+            <span class="nav-item">Approve Cradentials</span>
+          </a>
+        </li>
+        <li>
+          <a href="room.html">
+            <i class="fas fa-school"></i>
+            <span class="nav-item">Create Classroom</span>
+          </a>
+        </li>
+        <li>
+          <a href="req_room.html">
+            <i class="fas fa-check-circle"></i>
+            <span class="nav-item">Room Request</span>
+          </a>
+        </li>
+        <li>
+          <a href="malfunc.html">
+            <i class="fas fa-wrench"></i>
+            <span class="nav-item">Malfunction Requests</span>
+          </a>
+        </li>
+      </ul>
+      <li class="logout"><a href="#" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="nav-item">Logout</span>
+      </a></li>
+    </nav>
+    <div class="main1">
+      <h1>Approve/Reject Classroom Requests</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Classroom Number</th>
+            <th>Capacity</th>
+            <th>Type</th>
+            <th>Requested By</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Room 101</td>
+            <td>30</td>
+            <td>Classroom</td>
+            <td>John Doe</td>
+            <td>
+              <button class="approve-btn">Approve</button>
+              <button class="reject-btn">Reject</button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Room 202</td>
+            <td>50</td>
+            <td>Auditorium</td>
+            <td>Jane Smith</td>
+            <td>
+              <button class="approve-btn">Approve</button>
+              <button class="reject-btn">Reject</button>
+            </td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    function logout() {
+        // Add your logout logic here
+        // For example, redirect the user to the login page
+        window.location.href = "../login.html";
+      };
+     // JavaScript code for approving/rejecting requests
+    var approveButtons = document.getElementsByClassName("approve-btn");
+    var rejectButtons = document.getElementsByClassName("reject-btn");
+
+    function handleApproval() {
+      var requestId = this.parentNode.parentNode.cells[0].textContent;
+      var classroomNumber = this.parentNode.parentNode.cells[1].textContent;
+      var action = this.textContent.toLowerCase();
+
+      // Perform appropriate action based on approval or rejection
+      if (action === "approve") {
+        // Logic for approving the classroom request
+        console.log("Request ID: " + requestId + " approved for Classroom: " + classroomNumber);
+      } else if (action === "reject") {
+        // Logic for rejecting the classroom request
+        console.log("Request ID: " + requestId + " rejected for Classroom: " + classroomNumber);
+      }
+    }
+
+    // Attach click event listeners to approve buttons
+    for (var i = 0; i < approveButtons.length; i++) {
+      approveButtons[i].addEventListener("click", handleApproval);
+    }
+
+    // Attach click event listeners to reject buttons
+    for (var j = 0; j < rejectButtons.length; j++) {
+      rejectButtons[j].addEventListener("click", handleApproval);
+    }
+    </script>
+</body>
+</html>
