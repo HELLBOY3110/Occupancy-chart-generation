@@ -36,7 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // Room is available, proceed with the request submission
 
     // Prepare the SQL statement to insert the data into the table
-    $query = "INSERT INTO stu_req (day, timeslot, room_number, reason) VALUES ('$day', $timeslot, '$room', '$reason')";
+    $status = "pending"; // Set the status to "pending"
+    $query = "INSERT INTO stu_req (day, timeslot, room_number, reason, status) VALUES ('$day', $timeslot, '$room', '$reason', '$status')";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
