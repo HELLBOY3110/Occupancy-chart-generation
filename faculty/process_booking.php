@@ -31,6 +31,9 @@ $sql = "INSERT INTO bookings (subject_code, classroom_number, slot, day) VALUES 
 // Execute the SQL statement
 if ($conn->query($sql) === TRUE) {
     echo "Booking created successfully";
+}
+elseif ($conn->errno == 1062) {
+    echo "This classroom is already booked for the same slot on the same day.";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
