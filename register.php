@@ -15,6 +15,7 @@ if (!$connect) {
 
 if (isset($_POST['register'])) {
     $ur_role = mysqli_real_escape_string($connect, $_POST['urrole']);
+    $name = mysqli_real_escape_string($connect, $_POST['name']);
     $username = mysqli_real_escape_string($connect, $_POST['username']);
     $email = mysqli_real_escape_string($connect, $_POST['email']);
     $password = mysqli_real_escape_string($connect, $_POST['password']);
@@ -30,7 +31,7 @@ if (isset($_POST['register'])) {
         exit();
     } else {
         // Insert the new user into the database
-        $register = "INSERT INTO student (role1, username, email, password, status) VALUES ('$ur_role', '$username', '$email', '$password', 'pending')";
+        $register = "INSERT INTO student (role1,name, username, email, password, status) VALUES ('$ur_role','$name', '$username', '$email', '$password', 'pending')";
 
         if (mysqli_query($connect, $register)) {
             echo '<script type="text/javascript">';

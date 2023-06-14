@@ -31,7 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['feedback'])) {
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        echo "Feedback submitted successfully.";
+        echo '<script type="text/javascript">';
+        echo 'alert("Feedback has been Successfully Submitted");';
+        echo 'window.location.href = "feedback.html";';
+        echo '</script>';
+        exit();
     } else {
         echo "Failed to submit feedback. Please try again." ;
     }

@@ -11,7 +11,7 @@
 <body>
   <div class="container">
     <nav>
-       <ul>
+      <ul>
         <li>
           <a href="admin.html" class="logo">
             <img src="./pic/logo.jpg">
@@ -60,45 +60,64 @@
         <span class="nav-item">Logout</span>
       </a></li>
     </nav>
-
-    <section class="main">
-      <h1>Create Classroom</h1>
-      <form id="createClassroomForm" action="room.php" method="post">
-        <div class="form-group">
-          <label for="classnum">Classroom number:</label>
-          <input type="text" id="classnum" name="classnum" required>
-        </div>
-  
-        <div class="form-group">
-          <label for="classcap">Classroom capacity:</label>
-          <input type="text" id="classcap" name="classcap" required>
-        </div>
-  
-        <div class="form-group">
-          <label for="classtype">Type:</label>
-          <select id="classtype" name="classtype" required>
-            <option value="">Select Type</option>
-            <option value="classroom">Classroom</option>
-            <option value="auditorium">Auditorium</option>
-            <option value="labs">Labs</option>
-            <option value="clubroom">Clubroom</option>
-            <option value="artroom">Art Room</option>
-          </select>
-        </div>
-  
-        <div class="form-group">
-          <button type="submit" id="submitBtn">Create Classroom</button>
-        </div>
-      </form>
-  </section>
-  
+    <section class="main1">
+      <h1>View Feedback</h1>
+      <table id="student-table">
+        <tr>
+          <th>sno</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>User</th>
+          <th>Type</th>
+          <th>Feedback</th>
+        </tr>
+      </table>
+    </section>
   </div>
+  <iframe src="view_feed.php" style="display: none;"></iframe>
   <script>
     function logout() {
-        // Add your logout logic here
-        // For example, redirect the user to the login page
-        window.location.href = "../login.html";
+      // Add your logout logic here
+      // For example, redirect the user to the login page
+      window.location.href = "../login.html";
+    }
+    
+    // Fetch feedback data from the PHP file
+    fetchFeedbackData();
+
+    function fetchFeedbackData() {
+      // Make an AJAX request to retrieve feedback data from the PHP file
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var data = JSON.parse(xhr.responseText);
+          populateFeedbackTable(data);
+        }
       };
-    </script>
+      xhr.open('GET', 'fetch-feedback.php', true);
+      xhr.send();
+    }
+
+    function populateFeedbackTable(data) {
+      var table = document.getElementById('student-table');
+      
+      // Clear existing table data
+      table.innerHTML = '';
+      
+      // Create table rows for each feedback entry
+      data.forEach(function(feedback) {
+        var row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${feedback.sno}</td>
+          <td>${feedback.Username}</td>
+          <td>${feedback.Email}</td>
+          <td>${feedback.User}</td>
+          <td>${feedback.Type}</td>
+          <td>${feedback.Feedback}</td>
+        `;
+        table.appendChild(row);
+      });
+    }
+  </script>
 </body>
 </html>
