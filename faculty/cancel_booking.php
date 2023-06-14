@@ -1,28 +1,35 @@
 <?php
-// Retrieve the booking ID from the request
-$bookingId = $_POST['bookingId'];
+// Assuming you have already established a database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "stu_db";
 
-// Connect to the database (replace with your database credentials)
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'stu_db';
-$conn = new mysqli($host, $username, $password, $dbname);
+// Create connection
+$connect = mysqli_connect($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die('Connection failed: ' . $conn->connect_error);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Retrieve the booking ID from the form submission
+  $bookingId = $_POST["bookingId"];
+
+  // Delete the booking from the database
+  $query = "DELETE FROM bookings WHERE id = '$bookingId'";
+  $result = mysqli_query($connect, $query);
+
+  if ($result) {
+        echo '<script type="text/javascript">';
+        echo 'alert("Booking Cancelled successfully");';
+        echo 'window.location.href = "booking.html";';
+        echo '</script>';
+        exit();
+  } else {
+        echo '<script type="text/javascript">';
+        echo 'alert("error in cancell booking");. mysqli_error($connect);';
+        echo 'window.location.href = "booking.html";';
+        echo '</script>';
+  }
 }
 
-// Delete the booking from the database
-$sql = "DELETE FROM bookings WHERE id = $bookingId";
-
-if ($conn->query($sql) === TRUE) {
-    echo 'Booking deleted successfully';
-} else {
-    echo 'Error deleting booking: ' . $conn->error;
-    echo 'SQL query: ' . $sql; // Debug line
-}
-
-$conn->close();
+mysqli_close($connect);
 ?>
+

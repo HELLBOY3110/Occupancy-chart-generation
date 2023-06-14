@@ -19,23 +19,45 @@ if (!$result) {
     die("Database connection error: " . $conn->connect_error);
 }
 
-// Get form data
-$subjectCode = $_POST['Purpose'];
-$classroomNumber = $_POST['ClassroomNumber'];
-$slot = $_POST['slot'];
-$day = $_POST['day'];
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get form data
+    $subjectCode = $_POST['Purpose'];
+    $classroomNumber = $_POST['ClassroomNumber'];
+    $slot = $_POST['slot'];
+    $day = $_POST['day'];
 
-// Prepare the SQL statement
-$sql = "INSERT INTO bookings (subject_code, classroom_number, slot, day) VALUES ('$subjectCode', '$classroomNumber', '$slot', '$day')";
+    $classroomQuery = "SELECT * FROM classrooms WHERE classroomNumber = '$classroomNumber'";
+    $classroomResult = $conn->query($classroomQuery);
+    
+    if ($classroomResult->num_rows > 0) {
+        // Prepare the SQL statement
+        $sql = "INSERT INTO bookings (subject_code, classroom_number, slot, day) VALUES ('$subjectCode', '$classroomNumber', '$slot', '$day')";
 
-// Execute the SQL statement
-if ($conn->query($sql) === TRUE) {
-    echo "Booking created successfully";
-}
-elseif ($conn->errno == 1062) {
-    echo "This classroom is already booked for the same slot on the same day.";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    // Execute the SQL statement
+    if ($conn->query($sql) === TRUE) {
+        echo '<script type="text/javascript">';
+        echo 'alert("Booking created successfully");';
+        echo 'window.location.href = "booking.html";';
+        echo '</script>';
+        exit(); // Add this line to stop executing the remaining code
+    } elseif ($conn->errno == 1062) {
+        echo '<script type="text/javascript">';
+        echo 'alert("This classroom is already booked for the same slot on the same day.");';
+        echo 'window.location.href = "booking.html";';
+        echo '</script>';
+        exit(); // Add this line to stop executing the remaining code
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    }
+    else {
+        echo '<script type="text/javascript">';
+        echo 'alert("Invalid classroom number!");';
+        echo 'window.location.href = "booking.html";';
+        echo '</script>';
+        exit(); // Add this line to stop executing the remaining code
+    }
 }
 
 // Close the database connection
