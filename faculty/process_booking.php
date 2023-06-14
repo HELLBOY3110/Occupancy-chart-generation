@@ -12,13 +12,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Test query to check database connection
+$query = "SELECT 1";
+$result = $conn->query($query);
+if (!$result) {
+    die("Database connection error: " . $conn->connect_error);
+}
+
 // Get form data
-$purpose = $_POST['Purpose'];
-$classroomNumber = $_POST['Classroom_Number'];
+$subjectCode = $_POST['Purpose'];
+$classroomNumber = $_POST['ClassroomNumber'];
 $slot = $_POST['slot'];
+$day = $_POST['day'];
 
 // Prepare the SQL statement
-$sql = "INSERT INTO bookings (purpose, classroom_number, slot) VALUES ('$purpose', '$classroomNumber', '$slot')";
+$sql = "INSERT INTO bookings (subject_code, classroom_number, slot, day) VALUES ('$subjectCode', '$classroomNumber', '$slot', '$day')";
 
 // Execute the SQL statement
 if ($conn->query($sql) === TRUE) {

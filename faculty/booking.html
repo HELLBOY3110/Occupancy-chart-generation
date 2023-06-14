@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Booking</title>
   <link rel="stylesheet" href="fac-dash.css">
   <link rel="stylesheet" href="booking.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
+
 <body>
   <div class="container">
     <nav>
@@ -18,42 +20,63 @@
           </a>
         </li>
         <li><a href="booking.html">
-          <i class="fas fa-book"></i>
-          <span class="nav-item">Booking</span>
-        </a></li>
+            <i class="fas fa-book"></i>
+            <span class="nav-item">Booking</span>
+          </a></li>
         <li><a href="history.html">
-          <i class="fas fa-history	"></i>
-          <span class="nav-item">View or cancel</span>
-        </a></li>
+            <i class="fas fa-history	"></i>
+            <span class="nav-item">View or cancel</span>
+          </a></li>
         <li><a href="request.html">
-          <i class="fas fa-chalkboard-teacher"></i>
-          <span class="nav-item">Request</span>
-        </a></li>
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span class="nav-item">Request</span>
+          </a></li>
         <li><a href="generate chart.html">
-          <i class="fas fa-calendar-alt"></i>
-          <span class="nav-item">Generate Chart</span>
-        </a></li>
+            <i class="fas fa-calendar-alt"></i>
+            <span class="nav-item">Generate Chart</span>
+          </a></li>
         <li class="logout"><a href="#" onclick="logout()">
-          <i class="fas fa-sign-out-alt"></i>
-          <span class="nav-item">Logout</span>
-        </a></li>
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-item">Logout</span>
+          </a></li>
       </ul>
-      </nav>
-      
+    </nav>
+
     <section class="main">
       <h1>Booking Room</h1>
       <form id="createBookingForm" action="process_booking.php" method="post" onsubmit="return validateForm()">
         <div class="form-group">
-          <label for="Purpose">Purpose:</label>
-          <input type="text" id="Purpose" name="Purpose"  required></textarea>
+          <label for="Purpose">Subject Code:</label>
+          <input type="text" id="Purpose" name="Purpose" required>
         </div>
         <div class="form-group">
-          <label for="Classroom Number">Classroom Number:</label>
-          <input type="text" id="Classroom Number" name="Classroom Number" required>
+          <label for="ClassroomNumber">Classroom Number:</label>
+          <input type="text" id="ClassroomNumber" name="ClassroomNumber" required>
         </div>
         <div class="form-group">
           <label for="slot">Slot:</label>
-          <input type="text" id="slot" name="slot" required>	
+          <select id="slot" name="slot" required>
+            <option value="">Select a slot</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="day">Day:</label>
+          <select id="day" name="day" required>
+            <option value="">Select a day</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+          </select>
         </div>
         <div class="form-group">
           <button type="submit">Book</button>
@@ -62,11 +85,21 @@
     </section>
   </div>
   <script>
+    function validateForm() {
+        console.log("validateForm() called");
+        console.log("Form submitted"); // Add this line
+        // Rest of your validation logic
+        return true;
+      }
+
     function logout() {
-        // Add your logout logic here
-        // For example, redirect the user to the login page
-        window.location.href = "../login.html";
-      };
-    </script>
+      // Add your logout logic here
+      // For example, redirect the user to the login page
+      window.location.href = "../login.html";
+    };
+  </script>
+  <!-- <script src="validate_subject.js"></script>
+  <script src="validate.js"></script> -->
 </body>
+
 </html>
