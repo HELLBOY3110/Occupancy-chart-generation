@@ -42,7 +42,7 @@
       <h1>View and Cancel Bookings</h1>
       <table>
         <tr>
-          <th>Day</th>
+          <th>Date</th>
           <th>Timeslot</th>
           <th>Room Num</th>
           <th>Reason</th>
@@ -52,17 +52,18 @@
       </table>
     </section>
   </div>
+
   <script>
     function logout() {
       // Add your logout logic here
       // For example, redirect the user to the login page
       window.location.href = "../login.html";
     }
-  
-    function cancelBooking(bookingId, row) {
+
+    function cancelBooking(bookingId) {
       // Display confirmation message
       var confirmCancel = confirm("Are you sure you want to cancel this booking?");
-  
+
       if (confirmCancel) {
         // Send AJAX request to cancel the booking
         var xhr = new XMLHttpRequest();
@@ -74,9 +75,9 @@
             if (response.success) {
               // Booking canceled successfully
               alert("Booking canceled successfully!");
-  
-              // Remove the canceled row from the table
-              row.remove();
+
+              // Refresh the page to reflect the updated bookings
+              location.reload();
             } else {
               // Failed to cancel the booking
               alert("Failed to cancel the booking. Please try again.");
@@ -89,7 +90,7 @@
         alert("Cancellation process canceled.");
       }
     }
-  
+
     // Fetch booking data on page load
     document.addEventListener("DOMContentLoaded", function () {
       var xhr = new XMLHttpRequest();
@@ -98,7 +99,7 @@
         if (xhr.readyState === 4 && xhr.status === 200) {
           var response = JSON.parse(xhr.responseText);
           var bookings = response.bookings;
-  
+
           // Add each booking as a row in the table
           var table = document.querySelector("table");
           for (var i = 0; i < bookings.length; i++) {
@@ -108,19 +109,18 @@
             var roomNumCell = row.insertCell(2);
             var reasonCell = row.insertCell(3);
             var actionCell = row.insertCell(4);
-  
-            dateCell.textContent = bookings[i].date;
-            timeslotCell.textContent = bookings[i].timeslot;
-            roomNumCell.textContent = bookings[i].room_num;
-            reasonCell.textContent = bookings[i].reason;
-  
+
+            dateCell.innerHTML = bookings[i].day;
+            timeslotCell.innerHTML = bookings[i].timeslot;
+            roomNumCell.innerHTML = bookings[i].room_number;
+            reasonCell.innerHTML = bookings[i].reason;
+
+            // Add cancel button
             var cancelButton = document.createElement("button");
-            cancelButton.textContent = "Cancel";
-            cancelButton.addEventListener("click", (function (bookingId, row) {
-              return function () {
-                cancelBooking(bookingId, row);
-              };
-            })(bookings[i].bookingId, row));
+            cancelButton.innerHTML = "Cancel";
+            cancelButton.onclick = function () {
+              cancelBooking(bookings[i].booking_id);
+            };
             actionCell.appendChild(cancelButton);
           }
         }
@@ -128,6 +128,5 @@
       xhr.send();
     });
   </script>
-    
 </body>
 </html>

@@ -1,41 +1,43 @@
 <?php
+// Assuming you have already established a database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "stu_db";
 
+// Create connection
 $connect = mysqli_connect($servername, $username, $password, $dbname);
 
-if (!$connect) {
-  die("Connection failed: " . mysqli_connect_error());
-}
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+  // Fetch booking data
+  $query = "SELECT * FROM stu_req";
+  $result = mysqli_query($connect, $query);
 
-// Fetch booking data
-$query = "SELECT * FROM stu_req";
-$result = mysqli_query($connect, $query);
-
-if ($result) {
-  $bookings = array();
-  while ($row = mysqli_fetch_assoc($result)) {
-    $booking = array(
-      "bookingId" => $row["bookingId"],
-      "date" => $row["date"],
-      "timeslot" => $row["timeslot"],
-      "room_num" => $row["room_num"],
-      "reason" => $row["reason"]
-    );
-
-    $bookings[] = $booking;
+  if (!$result) {
+    die("Error: " . mysqli_error($connect));
   }
 
-  // Prepare the response
-  $response = array("bookings" => $bookings);
+  $bookings = array();
+  while ($row = mysqli_fetch_assoc($result)) {
+    $bookings[] = $row;
+  }
 
-  // Send the response as JSON
-  header("Content-Type: application/json");
+  $response = array("bookings" => $bookings);
   echo json_encode($response);
-} else {
-  echo "Error: " . mysqli_error($connect);
+} elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
+  // Cancel booking by deleting the record
+  $bookingId = $_POST["bookingId"];
+
+  $deleteQuery = "DELETE FROM stu_req WHERE booking_id = '$bookingId'";
+  $deleteResult = mysqli_query($connect, $deleteQuery);
+
+  if ($deleteResult) {
+    $response = array("success" => true);
+    echo json_encode($response);
+  } else {
+    $response = array("success" => false);
+    echo json_encode($response);
+  }
 }
 
 mysqli_close($connect);
