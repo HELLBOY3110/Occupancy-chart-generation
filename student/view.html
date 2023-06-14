@@ -42,61 +42,91 @@
       <h1>View and Cancel Bookings</h1>
       <table>
         <tr>
-          <th>Date</th>
+          <th>Day</th>
           <th>Timeslot</th>
           <th>Room Num</th>
           <th>Reason</th>
           <th>Action</th>
         </tr>
-        <tr>
-          <td>2023-05-24</td>
-          <td>Morning</td>
-          <td>Room 101</td>
-          <td>Meeting</td>
-          <td><button onclick="cancelBooking(1)">Cancel</button></td>
-        </tr>
-        <tr>
-          <td>2023-05-25</td>
-          <td>Afternoon</td>
-          <td>Room 202</td>
-          <td>Training</td>
-          <td><button onclick="cancelBooking(2)">Cancel</button></td>
-        </tr>
-        <!-- Add more rows as needed -->
+        <!-- Table rows will be dynamically added here -->
       </table>
     </section>
   </div>
-  
-  
-</body>
-</html>
-    
-  </div>
   <script>
-  function logout() {
+    function logout() {
       // Add your logout logic here
       // For example, redirect the user to the login page
       window.location.href = "../login.html";
-    };
-
-    function cancelBooking(bookingId) {
-  // Here you can write the logic to cancel the booking with the given bookingId
-  // For demonstration purposes, let's assume we're just displaying an alert message
-
-  // Display confirmation message
-  var confirmCancel = confirm("Are you sure you want to cancel this booking?");
-
-  if (confirmCancel) {
-    // Perform cancellation logic here
-
-    // Display success message
-    alert("Booking canceled successfully!");
-  } else {
-    // User cancelled the cancellation process
-    alert("Cancellation process canceled.");
-  }
-}
-
-  </script>
+    }
+  
+    function cancelBooking(bookingId, row) {
+      // Display confirmation message
+      var confirmCancel = confirm("Are you sure you want to cancel this booking?");
+  
+      if (confirmCancel) {
+        // Send AJAX request to cancel the booking
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "view.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              // Booking canceled successfully
+              alert("Booking canceled successfully!");
+  
+              // Remove the canceled row from the table
+              row.remove();
+            } else {
+              // Failed to cancel the booking
+              alert("Failed to cancel the booking. Please try again.");
+            }
+          }
+        };
+        xhr.send("bookingId=" + encodeURIComponent(bookingId));
+      } else {
+        // User cancelled the cancellation process
+        alert("Cancellation process canceled.");
+      }
+    }
+  
+    // Fetch booking data on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "view.php", true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          var bookings = response.bookings;
+  
+          // Add each booking as a row in the table
+          var table = document.querySelector("table");
+          for (var i = 0; i < bookings.length; i++) {
+            var row = table.insertRow();
+            var dateCell = row.insertCell(0);
+            var timeslotCell = row.insertCell(1);
+            var roomNumCell = row.insertCell(2);
+            var reasonCell = row.insertCell(3);
+            var actionCell = row.insertCell(4);
+  
+            dateCell.textContent = bookings[i].date;
+            timeslotCell.textContent = bookings[i].timeslot;
+            roomNumCell.textContent = bookings[i].room_num;
+            reasonCell.textContent = bookings[i].reason;
+  
+            var cancelButton = document.createElement("button");
+            cancelButton.textContent = "Cancel";
+            cancelButton.addEventListener("click", (function (bookingId, row) {
+              return function () {
+                cancelBooking(bookingId, row);
+              };
+            })(bookings[i].bookingId, row));
+            actionCell.appendChild(cancelButton);
+          }
+        }
+      };
+      xhr.send();
+    });
+  </script>    
 </body>
 </html>
