@@ -33,11 +33,11 @@ if (isset($_POST['username'])) {
       $_SESSION["username"] = $row['username']; // Store the username in the session variable
 
       if ($ur_role === 'Student') {
-        header("Location: /project/prject/student/stu-dash.html");
+        header("Location: /project/prject/Occupancy-chart-generation/student/stu-dash.php");
       } elseif ($ur_role === 'Admin') {
-        header("Location: /project/prject/admin/admin.html");
+        header("Location: /project/prject/Occupancy-chart-generation/admin/admin.html");
       } elseif ($ur_role === 'Faculty') {
-        header("Location: /project/prject/faculty/fac-dash.html");
+        header("Location: /project/prject/Occupancy-chart-generation/faculty/fac-dash.html");
       }
       exit();
     }
