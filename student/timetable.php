@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
             $slot = $row['slot'];
             $day = $row['day'];
 
-            $timetable[$slot][$day] = $subjectCode;
+            $timetable[$day][$slot] = $subjectCode;
         }
 
         // Display the timetable
@@ -60,8 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
             echo "<td>" . $days[$i-1] . "</td>";
 
             for ($j = 1; $j <= 8; $j++) {
-                echo "<td>" . $timetable[$j][$i] . "</td>";
-            }
+                if (isset($timetable[$i][$j])) {
+                    echo "<td>" . $timetable[$i][$j] . "</td>";
+                } else {
+                    echo "<td></td>";
+                }
+            }                      
 
             echo "</tr>";
         }
