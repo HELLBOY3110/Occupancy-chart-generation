@@ -111,7 +111,7 @@ mysqli_close($connect);
             <i class="fas fa-chalkboard-teacher"></i>
             <span class="nav-item">Request</span>
           </a></li>
-        <li><a href="generate chart.html">
+        <li><a href="chart.php">
             <i class="fas fa-calendar-alt"></i>
             <span class="nav-item">Generate Chart</span>
           </a></li>
