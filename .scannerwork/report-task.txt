@@ -1,6 +1,6 @@
-projectKey=occupancy
+projectKey=occupancy2
 serverUrl=http://localhost:9000
 serverVersion=10.0.0.68432
-dashboardUrl=http://localhost:9000/dashboard?id=occupancy
-ceTaskId=AYjAu7NmBme_2aiOkXZU
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYjAu7NmBme_2aiOkXZU
+dashboardUrl=http://localhost:9000/dashboard?id=occupancy2
+ceTaskId=AYjBEmRlBme_2aiOkXZh
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYjBEmRlBme_2aiOkXZh
