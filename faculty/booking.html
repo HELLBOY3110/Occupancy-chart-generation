@@ -86,11 +86,21 @@
   </div>
   <script>
     function validateForm() {
-        console.log("validateForm() called");
-        console.log("Form submitted"); // Add this line
-        // Rest of your validation logic
-        return true;
-      }
+  var classroomNumberInput = document.getElementById("classroom");
+  var classroomNumberValue = classroomNumberInput.value.trim();
+  
+  // Regular expression pattern to match the required format
+  var pattern = /^[A-Z]\d{3}$/;
+  
+  if (!pattern.test(classroomNumberValue)) {
+    alert("Classroom Number should have the format: a capital letter followed by three numbers. E.g., A102, B103, C331");
+    classroomNumberInput.focus();
+    return false;
+  }
+  
+  return true;
+  }
+
 
     function logout() {
       // Add your logout logic here
