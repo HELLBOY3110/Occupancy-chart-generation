@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo 'alert("Request submitted successfully.");';
         echo 'window.location.href = "request.html";';
         echo '</script>';
-        exit();
+        exit();
     } else {
         echo '<script type="text/javascript">';
         echo 'alert("Error: " . $sql . "<br>" . $conn->error;");';

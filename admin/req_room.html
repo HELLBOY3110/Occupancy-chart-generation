@@ -27,7 +27,7 @@
         <li>
           <a href="approve.html">
             <i class="fas fa-hands-helping"></i>
-            <span class="nav-item">Approve Cradentials</span>
+            <span class="nav-item">Approve Credentials</span>
           </a>
         </li>
         <li>
@@ -54,87 +54,114 @@
             <span class="nav-item">View Feedback</span>
           </a>
         </li>
+        <li class="logout">
+          <a href="#" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-item">Logout</span>
+          </a>
+        </li>
       </ul>
-      <li class="logout"><a href="#" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i>
-        <span class="nav-item">Logout</span>
-      </a></li>
     </nav>
     <div class="main1">
       <h1>Approve/Reject Classroom Requests</h1>
-      <table>
+      <table id="room-request-table">
         <thead>
           <tr>
             <th>Request ID</th>
             <th>Classroom Number</th>
-            <th>Capacity</th>
-            <th>Type</th>
-            <th>Requested By</th>
+            <th>Timeslot</th>
+            <th>Day</th>
+            <th>Reason</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Room 101</td>
-            <td>30</td>
-            <td>Classroom</td>
-            <td>John Doe</td>
-            <td>
-              <button class="approve-btn">Approve</button>
-              <button class="reject-btn">Reject</button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Room 202</td>
-            <td>50</td>
-            <td>Auditorium</td>
-            <td>Jane Smith</td>
-            <td>
-              <button class="approve-btn">Approve</button>
-              <button class="reject-btn">Reject</button>
-            </td>
-          </tr>
-          <!-- Add more rows as needed -->
+          <!-- Table rows will be dynamically generated -->
         </tbody>
       </table>
     </div>
   </div>
   <script>
     function logout() {
-        // Add your logout logic here
-        // For example, redirect the user to the login page
-        window.location.href = "../login.html";
-      };
-     // JavaScript code for approving/rejecting requests
-    var approveButtons = document.getElementsByClassName("approve-btn");
-    var rejectButtons = document.getElementsByClassName("reject-btn");
+      // Add your logout logic here
+      // For example, redirect the user to the login page
+      window.location.href = "../login.html";
+    }
 
-    function handleApproval() {
-      var requestId = this.parentNode.parentNode.cells[0].textContent;
-      var classroomNumber = this.parentNode.parentNode.cells[1].textContent;
-      var action = this.textContent.toLowerCase();
+    function loadRoomRequestTable() {
+  var table = document.getElementById("room-request-table");
 
-      // Perform appropriate action based on approval or rejection
-      if (action === "approve") {
-        // Logic for approving the classroom request
-        console.log("Request ID: " + requestId + " approved for Classroom: " + classroomNumber);
-      } else if (action === "reject") {
-        // Logic for rejecting the classroom request
-        console.log("Request ID: " + requestId + " rejected for Classroom: " + classroomNumber);
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "req_room.php", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var roomRequests = JSON.parse(xhr.responseText);
+
+      // Clear the table body
+      var tbody = table.getElementsByTagName("tbody")[0];
+      tbody.innerHTML = "";
+
+      // Add each room request as a row in the table
+      for (var i = 0; i < roomRequests.length; i++) {
+        (function (i) {
+          var row = tbody.insertRow();
+          row.insertCell().textContent = roomRequests[i].id;
+          row.insertCell().textContent = roomRequests[i].room_number;
+          row.insertCell().textContent = roomRequests[i].timeslot;
+          row.insertCell().textContent = roomRequests[i].day;
+          row.insertCell().textContent = roomRequests[i].reason;
+
+          var actionCell = row.insertCell();
+          var approveBtn = document.createElement("button");
+          approveBtn.textContent = "Approve";
+          approveBtn.className = "approve-btn";
+          approveBtn.onclick = function () {
+            approveRequest(roomRequests[i].id, row);
+          };
+          actionCell.appendChild(approveBtn);
+
+          var rejectBtn = document.createElement("button");
+          rejectBtn.textContent = "Reject";
+          rejectBtn.className = "reject-btn";
+          rejectBtn.onclick = function () {
+            rejectRequest(roomRequests[i].id, row);
+          };
+          actionCell.appendChild(rejectBtn);
+        })(i);
       }
     }
+  };
+  xhr.send();
+}
 
-    // Attach click event listeners to approve buttons
-    for (var i = 0; i < approveButtons.length; i++) {
-      approveButtons[i].addEventListener("click", handleApproval);
+    function approveRequest(requestId, row) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "req_room.php", true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+          row.remove();
+        }
+      };
+      xhr.send("requestId=" + requestId + "&action=approve");
     }
 
-    // Attach click event listeners to reject buttons
-    for (var j = 0; j < rejectButtons.length; j++) {
-      rejectButtons[j].addEventListener("click", handleApproval);
+    function rejectRequest(requestId, row) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "req_room.php", true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+          row.remove();
+        }
+      };
+      xhr.send("requestId=" + requestId + "&action=reject");
     }
-    </script>
+
+    // Load the room request table when the page loads
+    window.onload = loadRoomRequestTable;
+  </script>
 </body>
 </html>
