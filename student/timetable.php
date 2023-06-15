@@ -31,7 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
 
         // Initialize the array with empty slots
         for ($i = 1; $i <= 5; $i++) {
-            $timetable[$i] = array("", "", "", "", "", "", "", "");
+            for ($j = 1; $j <= 8; $j++) {
+                $timetable[$i][$j] = "";
+            }
         }
 
         // Populate the timetable array with bookings data
@@ -60,12 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
             echo "<td>" . $days[$i-1] . "</td>";
 
             for ($j = 1; $j <= 8; $j++) {
+<<<<<<< Updated upstream
                 if (isset($timetable[$i][$j])) {
                     echo "<td>" . $timetable[$i][$j] . "</td>";
                 } else {
                     echo "<td></td>";
                 }
             }                      
+=======
+                echo "<td>" . $timetable[$i][$j] . "</td>";
+            }
+>>>>>>> Stashed changes
 
             echo "</tr>";
         }
