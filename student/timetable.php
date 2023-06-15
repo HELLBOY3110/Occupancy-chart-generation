@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+
 // Database configuration
 $servername = "localhost";
 $username = "root";
@@ -51,6 +52,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
 
     if (!empty($timetable)) {
         // Display the timetable
+        echo "<html>";
+        echo "<head>";
+        echo "<style>";
+        echo "table {";
+        echo "  margin: 0 auto;";
+        echo "  border-collapse: collapse;";
+        echo "}";
+        echo "th, td {";
+        echo "  border: 1px solid black;";
+        echo "  padding: 8px;";
+        echo "}";
+        echo ".container {";
+        echo "  text-align: center;";
+        echo "}";
+        echo "</style>";
+        echo "</head>";
+        echo "<body>";
+        echo "<div class='container'>";
         echo "<table>";
         echo "<tr><th>Day/Slot</th><th>Slot 1</th><th>Slot 2</th><th>Slot 3</th><th>Slot 4</th><th>Slot 5</th><th>Slot 6</th><th>Slot 7</th><th>Slot 8</th></tr>";
 
@@ -68,6 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
         }
 
         echo "</table>";
+        echo "<a href='timetable.html'>Back</a>";
+        echo "</div>";
+        echo "</body>";
+        echo "</html>";
     } else {
         echo "No bookings found for room number $roomNumber.";
     }
