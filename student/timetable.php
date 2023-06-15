@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 // Database configuration
 $servername = "localhost";
 $username = "root";
@@ -13,14 +14,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Initialize the roomNumber variable
-$roomNumber = "";
-
-// Check if the form is submitted and roomNumber is provided
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
-    // Get the input room number
-    $roomNumber = $_POST['roomNumber'];
-
+// Function to generate the timetable based on room number
+function generateTimetable($roomNumber, $conn) {
     // Fetch bookings for the given room number
     $query = "SELECT * FROM bookings WHERE classroom_number = '$roomNumber'";
     $result = $conn->query($query);
@@ -31,9 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
 
         // Initialize the array with empty slots
         for ($i = 1; $i <= 5; $i++) {
-            for ($j = 1; $j <= 8; $j++) {
-                $timetable[$i][$j] = "";
-            }
+            $timetable[$i] = array("", "", "", "", "", "", "", "");
         }
 
         // Populate the timetable array with bookings data
@@ -45,24 +38,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
             $timetable[$day][$slot] = $subjectCode;
         }
 
+        return $timetable;
+    } else {
+        return array(); // Return an empty timetable if no bookings found
+    }
+}
+
+// Check if the form is submitted and roomNumber is provided
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
+    $roomNumber = $_POST['roomNumber'];
+    $timetable = generateTimetable($roomNumber, $conn);
+
+    if (!empty($timetable)) {
         // Display the timetable
         echo "<table>";
-        echo "<tr><th>Day/Slot</th>";
-
-        for ($i = 1; $i <= 8; $i++) {
-            echo "<th>Slot $i</th>";
-        }
-
-        echo "</tr>";
+        echo "<tr><th>Day/Slot</th><th>Slot 1</th><th>Slot 2</th><th>Slot 3</th><th>Slot 4</th><th>Slot 5</th><th>Slot 6</th><th>Slot 7</th><th>Slot 8</th></tr>";
 
         $days = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 
-        for ($i = 1; $i <= 5; $i++) {
+        foreach ($days as $day) {
             echo "<tr>";
-            echo "<td>" . $days[$i-1] . "</td>";
+            echo "<td>$day</td>";
 
-            for ($j = 1; $j <= 8; $j++) {
-                echo "<td>" . $timetable[$i][$j] . "</td>";
+            for ($slot = 1; $slot <= 8; $slot++) {
+                echo "<td>" . $timetable[$day][$slot] . "</td>";
             }
 
             echo "</tr>";
@@ -70,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
 
         echo "</table>";
     } else {
-        // No bookings found for the given room number
         echo "No bookings found for room number $roomNumber.";
     }
 }
