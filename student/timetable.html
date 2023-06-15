@@ -38,10 +38,21 @@
       </ul>
     </nav>
 
-    
+    <div class="timetable-container">
+      <h2>Timetable</h2>
+      <form action="timetable.php" method="POST">
+        <label for="roomNumber">Enter Room Number:</label>
+        <input type="text" id="roomNumber" name="roomNumber" required>
+        <button type="submit">View Timetable</button>
+      </form>
+
+      <!-- Add the PHP code here to display the timetable -->
+
+    </div>
   </div>
+
   <script>
-  function logout() {
+    function logout() {
       // Add your logout logic here
       // For example, redirect the user to the login page
       window.location.href = "../login.html";
