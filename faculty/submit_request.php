@@ -1,42 +1,52 @@
 <?php
-// Assuming you have a database connection
+// Database configuration
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "stu_db";
 
-// Create a new database connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Create a database connection
+$connection = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Check the connection
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
 }
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the form data
     $purpose = $_POST['Purpose'];
     $classroom = $_POST['classroom'];
-
-    // Prepare and execute the SQL statement to insert the data into the database
-    $sql = "INSERT INTO malfunction_requests (purpose, classroom) VALUES ('$purpose', '$classroom')";
-
-    if ($conn->query($sql) === TRUE) {
+    $description = $_POST['description'];
+    
+    // Perform any necessary data validation
+    
+    // Insert the request into the database
+    $query = "INSERT INTO requests (purpose, classroom, description) VALUES ('$purpose', '$classroom', '$description')";
+    // Replace 'requests' with your actual table name
+    
+    // Execute the query
+    if ($connection->query($query) === true) {
+        // Request successfully inserted into the database
+        // You can redirect the user to a success page or display a success message
         echo '<script type="text/javascript">';
-        echo 'alert("Request submitted successfully.");';
+        echo 'alert("Request submitted successfully");';
         echo 'window.location.href = "request.html";';
         echo '</script>';
         exit();
     } else {
+        // Error occurred while inserting the request
+        // You can redirect the user to an error page or display an error message
         echo '<script type="text/javascript">';
-        echo 'alert("Error: " . $sql . "<br>" . $conn->error;");';
+        echo 'alert("Error:  . $connection->error;");';
         echo 'window.location.href = "request.html";';
         echo '</script>';
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        exit();
+         
     }
 }
 
 // Close the database connection
-$conn->close();
+$connection->close();
 ?>
