@@ -25,19 +25,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        echo "Course created successfully.";
+        echo '<script type="text/javascript">';
+        echo 'alert("Created course Successfully");';
+        echo 'window.location.href = "course.html";';
+        echo '</script>';
+        exit();
     } else {
-        echo "Failed to create course. Please try again.";
+        echo '<script type="text/javascript">';
+        echo 'alert("Failed to create course. Please try again.");';
+        echo 'window.location.href = "course.html";';
+        echo '</script>';
+        exit();
     }
 }
 
 // Close the connection
 mysqli_close($conn);
 ?>
-<script>
-    // Redirect back to the same page after 2 seconds
-    setTimeout(function() {
-      window.location.href = "course.html";
-    }, 2000);
-  </script>
 
