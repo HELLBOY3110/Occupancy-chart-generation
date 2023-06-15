@@ -10,27 +10,22 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
 // Fetch feedback data from the database
 $sql = "SELECT * FROM feedback";
-$result = $conn->query($sql);
+$result = mysqli_query($conn, $sql);
 
 // Create an array to store the feedback data
 $feedbackData = array();
 
-if ($result->num_rows > 0) {
+if (mysqli_num_rows($result) > 0) {
     // Loop through each row and store the data in the array
-    while ($row = $result->fetch_assoc()) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $feedbackData[] = $row;
     }
 }
 
 // Close the database connection
-$conn->close();
+mysqli_close($conn);
 
 // Send the feedback data as JSON response
 header('Content-Type: application/json');
