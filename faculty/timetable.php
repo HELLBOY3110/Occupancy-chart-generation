@@ -52,6 +52,34 @@ error_reporting(0);
 
           if (!empty($timetable)) {
               // Display the timetable
+              echo "<html>";
+        echo "<head>";
+        echo "<style>";
+        echo "body {";
+        echo "  display: flex;";
+        echo "  justify-content: center;";
+        echo "  align-items: center;";
+        echo "  height: 100vh;";
+        echo "  margin: 0;";
+        echo "  padding: 0;";
+        echo "}";
+        echo "table {";
+        echo "  border-collapse: collapse;";
+        echo "}";
+        echo "th, td {";
+        echo "  border: 1px solid black;";
+        echo "  padding: 8px;";
+        echo "  background-color: transparent;";
+        echo "  backdrop-filter: blur(10px);";
+        echo "  box-shadow: 0 0 30px rgba(0, 0, 0, .5);";
+        echo "}";
+        echo ".container {";
+        echo "  text-align: center;";
+        echo "}";
+        echo "</style>";
+        echo "</head>";
+        echo "<body>";
+        echo "<div class='container'>";
               echo "<table>";
               echo "<tr><th>Day/Slot</th><th>Slot 1</th><th>Slot 2</th><th>Slot 3</th><th>Slot 4</th><th>Slot 5</th><th>Slot 6</th><th>Slot 7</th><th>Slot 8</th></tr>";
 
@@ -67,6 +95,12 @@ error_reporting(0);
 
                   echo "</tr>";
               }
+              echo "</table>";
+        echo "<br>";
+        echo "<a href='chart.html'>Back</a>";
+        echo "</div>";
+        echo "</body>";
+        echo "</html>";
 
               echo "</table>";
           } else {
@@ -77,3 +111,7 @@ error_reporting(0);
       // Close the database connection
       $conn->close();
       ?>
+<html>
+    <head></head>
+    <body background="../1091574.png"></body>
+</html>

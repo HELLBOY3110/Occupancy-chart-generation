@@ -55,13 +55,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
         echo "<html>";
         echo "<head>";
         echo "<style>";
+        echo "body {";
+        echo "  display: flex;";
+        echo "  justify-content: center;";
+        echo "  align-items: center;";
+        echo "  height: 100vh;";
+        echo "  margin: 0;";
+        echo "  padding: 0;";
+        echo "}";
         echo "table {";
-        echo "  margin: 0 auto;";
         echo "  border-collapse: collapse;";
         echo "}";
         echo "th, td {";
         echo "  border: 1px solid black;";
         echo "  padding: 8px;";
+        echo "  background-color: transparent;";
+        echo "  backdrop-filter: blur(10px);";
+        echo "  box-shadow: 0 0 30px rgba(0, 0, 0, .5);";
         echo "}";
         echo ".container {";
         echo "  text-align: center;";
@@ -87,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
         }
 
         echo "</table>";
+        echo "<br>";
         echo "<a href='timetable.html'>Back</a>";
         echo "</div>";
         echo "</body>";
@@ -99,3 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
 // Close the database connection
 $conn->close();
 ?>
+<html>
+    <head></head>
+    <body background="../1091574.png"></body>
+</html>
