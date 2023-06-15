@@ -26,16 +26,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['roomNumber'])) {
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
-        // Bookings found, display the timetable
-        echo "<table>";
-        echo "<tr><th>Subject Code</th><th>Slot</th><th>Day</th></tr>";
+        // Create a 2D array to store the timetable data
+        $timetable = array();
 
+        // Initialize the array with empty slots
+        for ($i = 1; $i <= 5; $i++) {
+            $timetable[$i] = array("", "", "", "", "", "", "", "");
+        }
+
+        // Populate the timetable array with bookings data
         while ($row = $result->fetch_assoc()) {
             $subjectCode = $row['subject_code'];
             $slot = $row['slot'];
             $day = $row['day'];
 
-            echo "<tr><td>$subjectCode</td><td>$slot</td><td>$day</td></tr>";
+            $timetable[$slot][$day] = $subjectCode;
+        }
+
+        // Display the timetable
+        echo "<table>";
+        echo "<tr><th>Day/Slot</th>";
+
+        for ($i = 1; $i <= 8; $i++) {
+            echo "<th>Slot $i</th>";
+        }
+
+        echo "</tr>";
+
+        $days = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
+
+        for ($i = 1; $i <= 5; $i++) {
+            echo "<tr>";
+            echo "<td>" . $days[$i-1] . "</td>";
+
+            for ($j = 1; $j <= 8; $j++) {
+                echo "<td>" . $timetable[$j][$i] . "</td>";
+            }
+
+            echo "</tr>";
         }
 
         echo "</table>";
