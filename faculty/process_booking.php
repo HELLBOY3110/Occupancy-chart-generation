@@ -27,33 +27,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $slot = $_POST['slot'];
     $day = $_POST['day'];
 
-    $classroomQuery = "SELECT * FROM classrooms WHERE classroomNumber = '$classroomNumber'";
-    $classroomResult = $conn->query($classroomQuery);
+    // Check if the course code is available
+    $courseQuery = "SELECT * FROM courses WHERE courseCode = '$subjectCode'";
+    $courseResult = $conn->query($courseQuery);
     
-    if ($classroomResult->num_rows > 0) {
-        // Prepare the SQL statement
-        $sql = "INSERT INTO bookings (subject_code, classroom_number, slot, day) VALUES ('$subjectCode', '$classroomNumber', '$slot', '$day')";
+    if ($courseResult->num_rows > 0) {
+        // Check if the classroom number exists
+        $classroomQuery = "SELECT * FROM classrooms WHERE classroomNumber = '$classroomNumber'";
+        $classroomResult = $conn->query($classroomQuery);
+        
+        if ($classroomResult->num_rows > 0) {
+            // Prepare the SQL statement
+            $sql = "INSERT INTO bookings (subject_code, classroom_number, slot, day) VALUES ('$subjectCode', '$classroomNumber', '$slot', '$day')";
 
-    // Execute the SQL statement
-    if ($conn->query($sql) === TRUE) {
-        echo '<script type="text/javascript">';
-        echo 'alert("Booking created successfully");';
-        echo 'window.location.href = "booking.html";';
-        echo '</script>';
-        exit(); // Add this line to stop executing the remaining code
-    } elseif ($conn->errno == 1062) {
-        echo '<script type="text/javascript">';
-        echo 'alert("This classroom is already booked for the same slot on the same day.");';
-        echo 'window.location.href = "booking.html";';
-        echo '</script>';
-        exit(); // Add this line to stop executing the remaining code
+            // Execute the SQL statement
+            if ($conn->query($sql) === TRUE) {
+                echo '<script type="text/javascript">';
+                echo 'alert("Booking created successfully");';
+                echo 'window.location.href = "booking.html";';
+                echo '</script>';
+                exit(); // Add this line to stop executing the remaining code
+            } elseif ($conn->errno == 1062) {
+                echo '<script type="text/javascript">';
+                echo 'alert("This classroom is already booked for the same slot on the same day.");';
+                echo 'window.location.href = "booking.html";';
+                echo '</script>';
+                exit(); // Add this line to stop executing the remaining code
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+        } else {
+            echo '<script type="text/javascript">';
+            echo 'alert("Invalid classroom number!");';
+            echo 'window.location.href = "booking.html";';
+            echo '</script>';
+            exit(); // Add this line to stop executing the remaining code
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-    }
-    else {
         echo '<script type="text/javascript">';
-        echo 'alert("Invalid classroom number!");';
+        echo 'alert("Invalid course code!");';
         echo 'window.location.href = "booking.html";';
         echo '</script>';
         exit(); // Add this line to stop executing the remaining code
