@@ -59,15 +59,15 @@
       // For example, redirect the user to the login page
       window.location.href = "../login.html";
     }
-
+  
     function cancelBooking(bookingId) {
       // Display confirmation message
       var confirmCancel = confirm("Are you sure you want to cancel this booking?");
-
+  
       if (confirmCancel) {
         // Send AJAX request to cancel the booking
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "view.php", true);
+        xhr.open("POST", "cancel.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function () {
           if (xhr.readyState === 4 && xhr.status === 200) {
@@ -75,7 +75,7 @@
             if (response.success) {
               // Booking canceled successfully
               alert("Booking canceled successfully!");
-
+  
               // Refresh the page to reflect the updated bookings
               location.reload();
             } else {
@@ -90,7 +90,7 @@
         alert("Cancellation process canceled.");
       }
     }
-
+  
     // Fetch booking data on page load
     document.addEventListener("DOMContentLoaded", function () {
       var xhr = new XMLHttpRequest();
@@ -99,7 +99,7 @@
         if (xhr.readyState === 4 && xhr.status === 200) {
           var response = JSON.parse(xhr.responseText);
           var bookings = response.bookings;
-
+  
           // Add each booking as a row in the table
           var table = document.querySelector("table");
           for (var i = 0; i < bookings.length; i++) {
@@ -109,17 +109,19 @@
             var roomNumCell = row.insertCell(2);
             var reasonCell = row.insertCell(3);
             var actionCell = row.insertCell(4);
-
+  
             dateCell.innerHTML = bookings[i].day;
             timeslotCell.innerHTML = bookings[i].timeslot;
             roomNumCell.innerHTML = bookings[i].room_number;
             reasonCell.innerHTML = bookings[i].reason;
-
+  
             // Add cancel button
             var cancelButton = document.createElement("button");
             cancelButton.innerHTML = "Cancel";
+            cancelButton.setAttribute("data-booking-id", bookings[i].id);
             cancelButton.onclick = function () {
-              cancelBooking(bookings[i].booking_id);
+              var bookingId = this.getAttribute("data-booking-id");
+              cancelBooking(bookingId);
             };
             actionCell.appendChild(cancelButton);
           }
@@ -128,5 +130,6 @@
       xhr.send();
     });
   </script>
+  
 </body>
 </html>
