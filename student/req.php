@@ -19,48 +19,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $day = $_POST["day"];
     $timeslot = $_POST["slot"];
     $room = $_POST["room"];
-    $subjectCode = $_POST["subjectCode"];
 
     // Check if the room is available for the given day and timeslot
     $checkQuery = "SELECT * FROM stu_req WHERE day = '$day' AND timeslot = $timeslot AND room_number = '$room'";
     $checkResult = mysqli_query($conn, $checkQuery);
 
+    if (!$checkResult) {
+        // Query execution failed, display an error message
+        echo "Failed to check room availability. Please try again.";
+        exit();
+    }
+
     if (mysqli_num_rows($checkResult) > 0) {
-        // Room is not available, display alert message
+        // Room is not available, display an alert message
         echo '<script type="text/javascript">';
         echo 'alert("The selected room is not available for the given day and timeslot. Please choose a different room.");';
         echo 'window.location.href = "request.html";';
         echo '</script>';
         exit();
     } else {
-        // Check if the subject code exists in the database
-        $subjectQuery = "SELECT * FROM courses WHERE subjectCode = '$subjectCode'";
-        $subjectResult = mysqli_query($conn, $subjectQuery);
+        // Prepare the SQL statement to insert the data into the table
+        $status = "pending"; // Set the status to "pending"
+        $query = "INSERT INTO stu_req (day, timeslot, room_number, status) VALUES ('$day', $timeslot, '$room', '$status')";
+        $result = mysqli_query($conn, $query);
 
-        if (mysqli_num_rows($subjectResult) > 0) {
-            // Room is available and subject code exists, proceed with the request submission
-
-            // Prepare the SQL statement to insert the data into the table
-            $status = "pending"; // Set the status to "pending"
-            $query = "INSERT INTO stu_req (day, timeslot, room_number, subjectCode, status) VALUES ('$day', $timeslot, '$room', '$subjectCode', '$status')";
-            $result = mysqli_query($conn, $query);
-
-            if ($result) {
-                echo '<script type="text/javascript">';
-                echo 'alert("Request has been successfully submitted.");';
-                echo 'window.location.href = "request.html";';
-                echo '</script>';
-                exit();
-            } else {
-                echo "Failed to submit the request. Please try again.";
-            }
-        } else {
-            // Subject code does not exist in the database, display an error message
+        if ($result) {
             echo '<script type="text/javascript">';
-            echo 'alert("Invalid subject code!");';
+            echo 'alert("Request has been successfully submitted.");';
             echo 'window.location.href = "request.html";';
             echo '</script>';
             exit();
+        } else {
+            echo "Failed to submit the request. Please try again.";
         }
     }
 }
